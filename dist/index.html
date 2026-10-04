@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d6342c"><meta name="description" content="按年级生成适合手绘的手抄报，支持彩色画稿与浅灰描绘版。">
+  <title>绘报工坊 · 手抄报生成器</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="绘报工坊首页"><img src="/favicon.svg" width="38" height="38" alt=""><span>绘报工坊<small>手抄报创作工作台</small></span></a>
+    <button class="connection" id="connect-button" type="button"><span class="connection-dot"></span><span id="connection-label">连接本机订阅</span><span class="connection-icon">⌁</span></button>
+  </header>
+  <main>
+    <div class="workspace-title"><div><span class="eyebrow">PAPER & IMAGINATION</span><h1>你的主题，画成一张手抄报。</h1></div><span class="local-badge">本地创作 · 手机也能用</span></div>
+    <div class="workspace">
+      <section class="controls" aria-labelledby="settings-title">
+        <div class="section-top"><span class="step-number">01</span><h2 id="settings-title">设计画稿</h2><span class="tiny-label">从一个主题开始</span></div>
+        <form id="generate-form">
+          <label class="field-label" for="topic">手抄报主题<span class="required">*</span></label>
+          <input id="topic" name="topic" maxlength="60" required value="十一国庆 · 盛世中华" placeholder="例如：国庆、环保、读书、科技">
+          <div class="topic-suggestions" aria-label="主题快捷选择"><button type="button" data-topic="十一国庆 · 盛世中华">国庆</button><button type="button" data-topic="阅读点亮成长">读书</button><button type="button" data-topic="守护蓝色星球">环保</button><button type="button" data-topic="探索科学的奥秘">科技</button></div>
+          <div class="form-row"><div><label class="field-label" for="grade">年级</label><select id="grade" name="grade"></select></div><div><label class="field-label" for="orientation">纸张方向</label><select id="orientation" name="orientation"><option value="landscape">横版 · A3</option><option value="portrait">竖版 · A3</option></select></div></div>
+          <div class="complexity-box"><div class="complexity-heading"><span>手绘复杂度</span><strong id="complexity-title">丰富</strong></div><div class="complexity-bars" id="complexity-bars" aria-hidden="true"></div><p id="complexity-description">构图更丰富，保留清晰轮廓，避免细碎纹理。</p><span class="complexity-foot">随年级自动调整</span></div>
+          <fieldset class="style-fieldset"><legend class="field-label">画面风格</legend><div class="style-grid">
+            <label class="style-choice"><input type="radio" name="style" value="guochao" checked><span class="style-content"><span class="swatch swatch-guochao"></span><span><strong>国潮大气</strong><small>红金 · 山河 · 气势</small></span><span class="choice-check">✓</span></span></label>
+            <label class="style-choice"><input type="radio" name="style" value="cool"><span class="style-content"><span class="swatch swatch-cool"></span><span><strong>酷炫风</strong><small>冲击 · 动势 · 醒目</small></span><span class="choice-check">✓</span></span></label>
+            <label class="style-choice"><input type="radio" name="style" value="cartoon"><span class="style-content"><span class="swatch swatch-cartoon"></span><span><strong>活泼卡通</strong><small>明快 · 可爱 · 生动</small></span><span class="choice-check">✓</span></span></label>
+            <label class="style-choice"><input type="radio" name="style" value="nature"><span class="style-content"><span class="swatch swatch-nature"></span><span><strong>清新自然</strong><small>蓝绿 · 留白 · 柔和</small></span><span class="choice-check">✓</span></span></label>
+            <label class="style-choice"><input type="radio" name="style" value="future"><span class="style-content"><span class="swatch swatch-future"></span><span><strong>科技未来</strong><small>几何 · 科幻 · 酷炫</small></span><span class="choice-check">✓</span></span></label>
+            <label class="style-choice"><input type="radio" name="style" value="anime"><span class="style-content"><span class="swatch swatch-anime"></span><span><strong>动漫热血</strong><small>漫画 · 活力 · 热血</small></span><span class="choice-check">✓</span></span></label>
+            <label class="style-choice"><input type="radio" name="style" value="blackgold"><span class="style-content"><span class="swatch swatch-blackgold"></span><span><strong>黑金大气</strong><small>沉稳 · 金色 · 力量</small></span><span class="choice-check">✓</span></span></label>
+            <label class="style-choice"><input type="radio" name="style" value="space"><span class="style-content"><span class="swatch swatch-space"></span><span><strong>梦幻星空</strong><small>紫蓝 · 星轨 · 梦幻</small></span><span class="choice-check">✓</span></span></label>
+          </div></fieldset>
+          <label class="field-label" for="notes">额外主题说明<span class="optional">选填</span></label>
+          <textarea id="notes" name="notes" maxlength="1200" rows="3" placeholder="想画哪些元素？标题写什么？文字多一点还是少一点？">画面大气，文字少，适合手绘。保留天安门、长城、山河和牡丹，细节不要太碎。</textarea>
+          <div class="notes-foot"><span>越具体，越贴近你的想法</span><span id="notes-count">0 / 1200</span></div>
+          <button class="primary-button" id="generate-button" type="submit"><span class="button-spark">✦</span><span id="generate-label">生成手抄报</span></button>
+          <p class="usage-note">生成通常需要1–3分钟。</p>
+        </form>
+      </section>
+      <section class="result" aria-labelledby="result-title">
+        <div class="result-top"><div class="result-heading"><span class="step-number">02</span><h2 id="result-title">画稿预览</h2></div><div class="view-tabs" role="tablist" aria-label="画稿版本"><button role="tab" aria-selected="true" id="color-tab" type="button">彩色画稿</button><button role="tab" aria-selected="false" id="trace-tab" type="button">浅灰描绘版</button></div></div>
+        <div class="preview-stage" id="preview-stage"><div class="paper"><img id="preview-image" src="/assets/example.png" alt="国庆主题手抄报示例，含盛世中华标题、天安门、山河和牡丹"><div class="sample-label" id="sample-label">国庆主题示例</div></div>
+          <div class="generation-overlay" id="generation-overlay" hidden><div class="spinner"></div><strong id="progress-title">正在创作你的手抄报</strong><span id="progress-message">正在准备画稿</span><span class="progress-time" id="progress-time">00:00</span><button id="cancel-button" type="button">取消本次生成</button></div>
+        </div>
+        <div class="preview-caption"><div><span class="art-dot"></span><strong id="art-title">十一国庆 · 盛世中华</strong></div><span id="art-meta">初一 / 国潮大气 / 横版</span></div>
+        <div class="trace-settings" id="trace-settings" hidden>
+          <div class="trace-control"><div class="trace-slider-label"><label for="trace-darkness">描绘线条深浅</label><output id="trace-percent" for="trace-darkness">24%</output></div><input type="range" id="trace-darkness" min="10" max="50" value="24" step="2"><div class="slider-hints"><span>更浅，方便覆盖</span><span>更深，容易看清</span></div></div>
+          <div class="trace-control"><div class="trace-slider-label"><label for="trace-width">描绘线条粗细</label><output id="trace-width-label" for="trace-width">极细 · 1档</output></div><input type="range" id="trace-width" min="1" max="5" value="1" step="1" aria-valuetext="极细，1档"><div class="slider-hints"><span>极细，方便描线</span><span>稍粗，保留细节</span></div></div>
+        </div>
+        <div class="result-actions"><button class="trace-button" id="make-trace" type="button"><span>⌁</span>生成浅灰描绘版</button><button class="download-button" id="download-button" type="button"><span>⇩</span>下载画稿</button><button class="print-button" id="print-button" type="button" aria-label="打印画稿">打印</button></div>
+        <p class="result-tip" id="result-tip"><span>✧</span>先看彩色参考，再打印浅灰描绘版，沿轮廓勾线、自由上色。</p>
+        <div class="job-notice" id="job-notice" role="status" hidden></div>
+        <div class="process-strip"><div><span>1</span><strong>选年级和主题</strong></div><i></i><div><span>2</span><strong>生成彩色画稿</strong></div><i></i><div><span>3</span><strong>打印描绘上色</strong></div></div>
+      </section>
+    </div>
+    <footer><span>绘报工坊 · 让创意落在纸上</span><span>画稿由 AI 生成，书写前请检查文字。</span></footer>
+  </main>
+  <dialog id="login-dialog" class="login-dialog"><button class="dialog-close" id="login-close" type="button" aria-label="关闭">×</button><span class="eyebrow">LOCAL CODEX</span><h2>连接你的 Codex 订阅</h2><p id="login-description">登录会保存在这台电脑上。网站调用本机 Codex 内置图片生成，使用你的订阅额度。</p><div id="login-code-area" hidden><span>在授权页面输入以下一次性代码</span><strong id="login-code"></strong><a class="primary-button" id="login-link" target="_blank" rel="noopener noreferrer">打开官方授权页面</a><p>完成授权后，网站会自动检测连接状态。</p></div><button class="primary-button" id="start-login" type="button">开始连接订阅</button><p class="dialog-error" id="login-error" role="alert"></p></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script type="module" src="/app.mjs"></script>
+</body></html>
